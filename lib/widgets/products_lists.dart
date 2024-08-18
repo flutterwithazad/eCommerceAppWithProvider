@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/products_details_page.dart';
-import 'package:shop_app/products_widget.dart';
-import './jsonfile/jsonfile.dart';
+import 'package:shop_app/Pages/products_details_page.dart';
+import 'package:shop_app/widgets/products_widget.dart';
+import '../jsonfile/jsonfile.dart';
 
 class ProductsLists extends StatefulWidget {
   const ProductsLists({super.key});

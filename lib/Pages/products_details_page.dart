@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/cart_provider.dart';
+import 'package:shop_app/Provider/cart_provider.dart';
 
 class ProductsDetailsPage extends StatefulWidget {
   final Map<String, dynamic> product;
@@ -132,7 +132,7 @@ class _ProductsDetailsPageState extends State<ProductsDetailsPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(double.infinity, 40),
+                        fixedSize: Size(350, 40),
                         backgroundColor: Colors.deepPurple),
                     onPressed: onTap,
                     icon: const Icon(
