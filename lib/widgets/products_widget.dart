@@ -38,7 +38,7 @@ class products_widget extends StatelessWidget {
           Center(
             child: Image.asset(
               image,
-              height: 250,
+              height: 165,
             ),
           ),
         ],

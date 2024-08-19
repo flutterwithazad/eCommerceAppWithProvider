@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:shop_app/Pages/products_details_page.dart';
 import 'package:shop_app/widgets/products_widget.dart';
 import '../jsonfile/jsonfile.dart';
@@ -39,6 +40,7 @@ class _ProductsListsState extends State<ProductsLists> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -104,32 +106,62 @@ class _ProductsListsState extends State<ProductsLists> {
                   }),
             ),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.67,
-            width: double.infinity,
-            child: ListView.builder(
-                itemCount: products.length,
-                itemBuilder: (context, index) {
-                  final product = products[index];
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) {
-                          return ProductsDetailsPage(product: product);
-                        }),
+          LayoutBuilder(builder: (context, constrainsts) {
+            if (constrainsts.maxWidth > 1080) {
+              return GridView.builder(
+                  itemCount: products.length,
+                  shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      childAspectRatio: 2, crossAxisCount: 2),
+                  itemBuilder: (context, index) {
+                    final product = products[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) {
+                            return ProductsDetailsPage(product: product);
+                          }),
+                        );
+                      },
+                      child: products_widget(
+                        image: product['imageUrl'] as String,
+                        title: product['title'] as String,
+                        price: product['price'].toString(),
+                        backgroundColor: index % 2 == 0
+                            ? const Color.fromARGB(255, 223, 241, 250)
+                            : const Color.fromARGB(153, 250, 248, 248),
+                      ),
+                    );
+                  });
+            } else {
+              return SizedBox(
+                height: MediaQuery.of(context).size.height * 0.67,
+                width: double.infinity,
+                child: ListView.builder(
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      final product = products[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) {
+                              return ProductsDetailsPage(product: product);
+                            }),
+                          );
+                        },
+                        child: products_widget(
+                          image: product['imageUrl'] as String,
+                          title: product['title'] as String,
+                          price: product['price'].toString(),
+                          backgroundColor: index % 2 == 0
+                              ? const Color.fromARGB(255, 223, 241, 250)
+                              : const Color.fromARGB(153, 250, 248, 248),
+                        ),
                       );
-                    },
-                    child: products_widget(
-                      image: product['imageUrl'] as String,
-                      title: product['title'] as String,
-                      price: product['price'].toString(),
-                      backgroundColor: index % 2 == 0
-                          ? const Color.fromARGB(255, 223, 241, 250)
-                          : const Color.fromARGB(153, 250, 248, 248),
-                    ),
-                  );
-                }),
-          )
+                    }),
+              );
+            }
+          }),
         ],
       ),
     );
